@@ -17,4 +17,10 @@ Requirements:
 8. Clear the input field after adding the idea.
 9. Prevent adding empty ideas.
 
+
+UI refining.
+1.add an option to vote for ideas
+2.add a relevant logo to the header
+3.add dynamic changing black to white  gradient background
+
 Return the complete working code in one HTML file including HTML, CSS, and JavaScript.

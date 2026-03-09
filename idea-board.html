@@ -1,263 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Group Idea Board</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #FFFFFF 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 10s ease infinite;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            max-width: 600px;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #4CAF50 0%, #FFFFFF 100%);
-            color: #333;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        select,
-        input[type="text"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            font-family: inherit;
-        }
-
-        select:focus,
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #2196F3;
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-        }
-
-        select {
-            cursor: pointer;
-            background-color: white;
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 20px;
-            padding-right: 40px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #4CAF50 0%, #FFFFFF 100%);
-            color: #333;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(33, 150, 243, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .ideas-section {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 2px solid #e0e0e0;
-        }
-
-        .ideas-section h2 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .ideas-list {
-            list-style-position: inside;
-        }
-
-        .ideas-list li {
-            background: #f8f9fa;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            color: #555;
-            line-height: 1.6;
-            border-left: 4px solid #4CAF50;
-            transition: all 0.2s ease;
-        }
-
-        .ideas-list li:hover {
-            background: #f0fff0;
-            transform: translateX(5px);
-        }
-
-        .empty-message {
-            color: #999;
-            font-style: italic;
-            text-align: center;
-            padding: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .header {
-                padding: 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Idea Board</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(-45deg, #000000, #525252, #a1a1aa, #ffffff);background-size:400% 400%;animation:gradientShift 15s ease infinite;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px;color:#334155;}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.container{background:white;border-radius:16px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);max-width:650px;width:100%;overflow:hidden;}
+.header{background:linear-gradient(135deg,#4CAF50,#ffffff);padding:40px 30px;text-align:center;color:#333;display:flex;flex-direction:column;align-items:center;gap:15px;}
+.header svg{filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1));color:#4CAF50;}
+.header h1{font-size:32px;font-weight:800;letter-spacing:-0.025em;color:#2e7d32;}
+.header p{opacity:0.8;font-size:16px;font-weight:600;}
+.content{padding:30px;}
+.form-group{margin-bottom:20px;}
+label{display:block;margin-bottom:6px;font-weight:600;font-size:14px;color:#333;}
+select,input{width:100%;padding:12px;border-radius:8px;border:2px solid #e0e0e0;font-size:14px;transition:.3s;}
+select:focus,input:focus{outline:none;border-color:#4CAF50;box-shadow:0 0 0 3px rgba(76,175,80,0.15);}
+.buttons{display:flex;gap:10px;margin-top:10px;}
+button{flex:1;padding:12px;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;background:linear-gradient(135deg,#4CAF50,#fff);color:#333;transition:.3s;}
+button:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.2);}
+.ideas-section{margin-top:30px;border-top:2px solid #eee;padding-top:20px;}
+.ideas-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+.idea-count{background:#4CAF50;color:white;padding:4px 10px;border-radius:20px;font-size:13px;}
+ul{list-style:none;}
+li{background:#f8f9fa;padding:12px 15px;border-radius:6px;margin-bottom:10px;border-left:4px solid #4CAF50;display:flex;justify-content:space-between;align-items:center;transition:.2s;}
+li:hover{background:#f0fff0;transform:translateX(5px);}
+.suggested{font-weight:600;color:#4CAF50;margin-left:10px;}
+.vote-btn{background:#fff;border:1px solid #4CAF50;color:#4CAF50;padding:4px 8px;border-radius:5px;cursor:pointer;transition:.2s;font-size:13px;margin-left:10px;}
+.vote-btn:hover{background:#4CAF50;color:white;}
+.vote-count{font-weight:600;color:#333;margin-left:5px;}
+.empty{text-align:center;color:#888;font-style:italic;padding:15px;}
+footer{text-align:center;padding:15px;font-size:13px;color:#666;border-top:1px solid #eee;}
+@media(max-width:600px){.content{padding:20px;}.buttons{flex-direction:column;}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Group Idea Board</h1>
-        </div>
-        <div class="content">
-            <div class="form-group">
-                <label for="nameSelect">Select Your Name:</label>
-                <select id="nameSelect">
-                    <option value="">-- Choose a name --</option>
-                    <option value="Yethmika">Yethmika</option>
-                    <option value="Pawan">Pawan</option>
-                    <option value="dinith">dinith</option>
-                    <option value="Dilpa">Dilpa</option>
-                    <option value="Udantha">Udantha</option>
-                    <option value="Tharusha">Tharusha</option>
-                    <option value="Chamodya">Chamodya</option>
-                </select>
-            </div>
+<div class="container">
+<div class="header">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"></path>
+        <path d="M9 18h6"></path>
+        <path d="M10 22h4"></path>
+    </svg>
+    <h1>Group Idea Board</h1>
+    <p>Inspire. Collaborate. Innovate.</p>
+</div>
+<div class="content">
+<div class="form-group">
+<label>Select Your Name</label>
+<select id="nameSelect">
+<option value="">Choose a name</option>
+<option>Yethmika</option>
+<option>Pawan</option>
+<option>Dinith</option>
+<option>Dilpa</option>
+<option>Udantha</option>
+<option>Tharusha</option>
+<option>Chamodya</option>
+</select>
+</div>
+<div class="form-group">
+<label>Your Idea</label>
+<input type="text" id="ideaInput" placeholder="Enter your idea">
+</div>
+<div class="buttons">
+<button id="addBtn">Add Idea</button>
+<button id="clearBtn">Clear</button>
+</div>
+<div class="ideas-section">
+<div class="ideas-header">
+<h3>Ideas</h3>
+<span class="idea-count" id="ideaCount">0</span>
+</div>
+<ul id="ideasList">
+<li class="empty">No ideas yet. Add one to get started!</li>
+</ul>
+</div>
+</div>
+<footer>Collaborative Group Idea Board</footer>
+</div>
 
-            <div class="form-group">
-                <label for="ideaInput">Your Idea:</label>
-                <input 
-                    type="text" 
-                    id="ideaInput" 
-                    placeholder="Enter your idea here"
-                    autocomplete="off"
-                >
-            </div>
+<script>
+const nameSelect=document.getElementById("nameSelect")
+const ideaInput=document.getElementById("ideaInput")
+const addBtn=document.getElementById("addBtn")
+const clearBtn=document.getElementById("clearBtn")
+const ideasList=document.getElementById("ideasList")
+const ideaCount=document.getElementById("ideaCount")
+let count=0
 
-            <button id="addBtn">Add Idea</button>
+addBtn.addEventListener("click",addIdea)
+ideaInput.addEventListener("keypress",e=>{if(e.key==="Enter"){addIdea()}})
+clearBtn.addEventListener("click",()=>{ideaInput.value="";ideaInput.focus()})
 
-            <div class="ideas-section">
-                <h2>Ideas:</h2>
-                <ul class="ideas-list" id="ideasList">
-                    <li class="empty-message">No ideas yet. Add one to get started!</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+function addIdea(){
+const name=nameSelect.value
+const idea=ideaInput.value.trim()
+if(!name){alert("Please select a name");return}
+if(!idea){alert("Please enter an idea");return}
 
-    <script>
-        const nameSelect = document.getElementById('nameSelect');
-        const ideaInput = document.getElementById('ideaInput');
-        const addBtn = document.getElementById('addBtn');
-        const ideasList = document.getElementById('ideasList');
+const empty=document.querySelector(".empty")
+if(empty){empty.remove()}
 
-        addBtn.addEventListener('click', addIdea);
-        ideaInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                addIdea();
-            }
-        });
+const li=document.createElement("li")
+li.innerHTML=`
+<span>${idea}</span>
+<div>
+<span class="suggested">${name}</span>
+<button class="vote-btn">Vote <span class="vote-count">0</span></button>
+</div>
+`
+ideasList.appendChild(li)
+ideaInput.value=""
+ideaInput.focus()
+count++
+ideaCount.textContent=count
 
-        function addIdea() {
-            const selectedName = nameSelect.value;
-            const ideaText = ideaInput.value.trim();
-
-            // Validation
-            if (!selectedName) {
-                alert('Please select a name');
-                return;
-            }
-
-            if (!ideaText) {
-                alert('Please enter an idea');
-                return;
-            }
-
-            // Remove empty message if it exists
-            const emptyMessage = ideasList.querySelector('.empty-message');
-            if (emptyMessage) {
-                emptyMessage.remove();
-            }
-
-            // Create new idea element
-            const ideaItem = document.createElement('li');
-            ideaItem.textContent = `${ideaText} – suggested by ${selectedName}`;
-            ideasList.appendChild(ideaItem);
-
-            // Clear input field
-            ideaInput.value = '';
-            ideaInput.focus();
-        }
-    </script>
+// Add vote functionality
+const voteBtn=li.querySelector(".vote-btn")
+const voteCount=li.querySelector(".vote-count")
+voteBtn.addEventListener("click",()=>{voteCount.textContent=parseInt(voteCount.textContent)+1})
+}
+</script>
 </body>
 </html>
