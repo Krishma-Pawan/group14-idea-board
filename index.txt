@@ -1,0 +1,20 @@
+Create a simple interactive "Group Idea Board" web application using HTML, CSS, and JavaScript.
+
+Requirements:
+1. A centered card-style container with the title "Group Idea Board".
+2. A dropdown menu to select a name (e.g., Yethmika,Pawan,dinith , Dilpa , Udantha ,Tharusha , Chamodya ).
+3. A text input field with placeholder "Enter your idea here".
+4. A Gradient Color ( Green to white ) "Add Idea" button.
+5. When the button is clicked:
+   - The idea should be added to a list below.
+   - The format should be: "Idea text – suggested by Name".
+6. Display the ideas as bullet points.
+7. Use clean modern styling with CSS:
+   - Gradient Color ( Green to white ) header bar
+   - dynamic changing Gradient background (black to white )
+   - Rounded input boxes
+   - Responsive layout
+8. Clear the input field after adding the idea.
+9. Prevent adding empty ideas.
+
+Return the complete working code in one HTML file including HTML, CSS, and JavaScript.
