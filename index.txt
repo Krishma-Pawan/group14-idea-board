@@ -1,6 +1,89 @@
+<<<<<<< HEAD
 Create a simple interactive "Group Idea Board" webpage  application using HTML, CSS, and JavaScript.
 
 
+=======
+
+
+homepage: 1.add header named by student tool kit. (colors-gradien maroon,gold \ text style-sadoshi )
+          2.add a piture of ucsc coner of header (C:\Users\MSI\Desktop\group works\day 3\vibecoding_group14\ucsc.png)-remove white color background
+          3.add a navigation bar.(items-home, gpa calculator , study timer, Group Idea Board )background colors-background colors-gradien white,grey
+          4.homebackground style iso27 background style (bubble style \background colors-gradien white,grey)
+ 
+
+Requirements:after click  "home" come back to home page
+
+Build a modern “Student Productivity Toolkit” web application using HTML, CSS, and JavaScript in a single index.html file.
+
+The application must be designed as a professional academic dashboard that helps university students track their GPA and study productivity.
+
+MAIN FEATURES
+
+GPA CALCULATOR (Advanced) Create a dynamic GPA calculator with the following capabilities:
+• Allow students to add unlimited subjects dynamically
+• Each subject must include:
+
+Subject name
+Credit value
+Grade selection (A+, A, A-, B+, B, B-, C+, C, C-, D, F)
+• Automatically calculate:
+
+GPA for the semester
+Total credits
+Weighted GPA
+• Include additional tools:
+
+GPA prediction calculator (What grade do I need?)
+Visual GPA indicator (progress bar or color system)
+Reset button
+PRODUCTIVITY ANALYTICS DASHBOARD
+Create a productivity tracking system with the following features:
+
+• Pomodoro study timer (25 min focus, 5 min break) • Start, pause, and reset controls • Track number of completed Pomodoro sessions • Calculate total study hours automatically • Display daily productivity statistics:
+
+Total study time
+Completed sessions
+Study streak counter
+STUDY ANALYTICS VISUALIZATION
+Display a simple analytics section showing:
+
+• Weekly productivity summary • Focus score • Study consistency indicator • Visual progress bars or charts
+
+APPLICATION LAYOUT
+Design the interface using clear layout classes:
+
+• navbar • sidebar • main-content • tool-card
+
+The navbar must contain: • Website title: “Student Toolkit” • Navigation items:
+
+GPA Calculator
+
+The sidebar must include: • A section titled “Upcoming Events” • At least 4 example academic events • A quick productivity summary card
+
+DESIGN REQUIREMENTS
+• Use a modern dashboard style • Gradient background • Rounded cards with shadows • Smooth hover animations • Responsive layout using Flexbox or Grid • Clean typography suitable for productivity apps
+
+DATA STORAGE
+Use JavaScript localStorage to save: • GPA records • Study sessions • Productivity statistics
+
+This ensures data persists after page refresh.
+
+USER EXPERIENCE
+• Navigation should switch between tools dynamically without reloading the page • Display clear success messages • Use icons or emojis to make the interface student-friendly • Ensure the design looks like a real productivity web app used by university students.
+
+Generate clean, well-commented code and organize the HTML, CSS, and JavaScript clearly. use maroon and yellow as color theme
+
+remove pomodoro timer and Study Analytics
+
+remove the hader student toolkit and use gpa calculator aas header
+remove "Gpa calculatre" name in top right
+select grade should be text box
+when grade type it should always capital
+
+
+Create a simple interactive "Group Idea Board" webpage  application using HTML, CSS, and JavaScript.
+
+>>>>>>> student-toolkit-website
 Requirements:after click  "Group Idea Board" item in navigation bar move a new web page 
 1. A centered card-style container with the title "Group Idea Board".
 2. A dropdown menu to select a name (e.g., Yethmika,Pawan,dinith , Dilpa , Udantha ,Tharusha , Chamodya ).

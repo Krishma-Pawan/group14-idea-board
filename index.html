@@ -1,0 +1,2009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Student Tool Kit – UCSC</title>
+<link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --maroon: #6b0f1a;
+    --gold: #c9a84c;
+    --light-gold: #f0d080;
+    --nav-bg: linear-gradient(90deg, #ffffff 0%, #c8c8c8 100%);
+    --home-bg1: #f5f5f5;
+    --home-bg2: #d0d0d0;
+    --text-dark: #1a0a00;
+    --text-light: #fff8ee;
+    --card-bg: rgba(255,255,255,0.82);
+    --shadow: 0 8px 32px rgba(107,15,26,0.13);
+  }
+  body.dark-mode {
+    --nav-bg: linear-gradient(90deg, #111 0%, #222 100%);
+    --home-bg1: #0f0f0f;
+    --home-bg2: #1a1a1a;
+    --text-dark: #f0d080;
+    --text-light: #ffe;
+    --card-bg: rgba(25,18,10,0.92);
+    --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  }
+
+  /* ── GLOBAL DARK MODE OVERRIDES ── */
+  body.dark-mode {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+    color: #e8d8b0;
+  }
+  /* Timer page dark */
+  body.dark-mode #timerPage {
+    background: #0f0f0f;
+  }
+  body.dark-mode #timerPage::before {
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(107,15,26,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(201,168,76,0.12) 0%, transparent 70%),
+      #0f0f0f;
+  }
+  body.dark-mode .glass-card {
+    background: rgba(30,20,12,0.85);
+    border-color: rgba(201,168,76,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  body.dark-mode .timer-page-title,
+  body.dark-mode .graph-card h3,
+  body.dark-mode .reminder-card h3 { filter: brightness(1.1); }
+  body.dark-mode .timer-digits { filter: brightness(1.1); }
+  body.dark-mode .timer-label { color: #666; }
+  body.dark-mode .mode-tab { color: var(--gold); border-color: rgba(201,168,76,0.25); }
+  body.dark-mode .mode-tab.active,
+  body.dark-mode .mode-tab:hover { color: #fff; }
+  body.dark-mode .bar-label { color: #666; }
+  body.dark-mode .graph-legend { color: #666; }
+  body.dark-mode .reminder-row input[type="text"],
+  body.dark-mode .reminder-row input[type="number"] {
+    background: rgba(40,28,14,0.9);
+    border-color: rgba(201,168,76,0.2);
+    color: #e8d8b0;
+  }
+  body.dark-mode .reminders-list li {
+    background: rgba(40,28,14,0.7);
+    color: #ccc;
+  }
+  body.dark-mode .toast {
+    background: rgba(25,18,10,0.95);
+    border-color: rgba(201,168,76,0.3);
+  }
+  body.dark-mode .toast-title { color: var(--gold); }
+  body.dark-mode .toast-msg { color: #aaa; }
+  /* GPA page dark */
+  body.dark-mode #gpaPage {
+    background: linear-gradient(135deg, #0f0f0f 0%, #1a1209 40%, #141008 100%);
+  }
+  body.dark-mode .sidebar-card,
+  body.dark-mode .tool-card {
+    background: rgba(25,18,10,0.9);
+    border-color: rgba(201,168,76,0.15);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  body.dark-mode .sidebar-card-title { filter: brightness(1.1); }
+  body.dark-mode .gpa-scale { color: #666; }
+  body.dark-mode .gpa-stat-lbl { color: #666; }
+  body.dark-mode .gpa-bar-label { color: #666; }
+  body.dark-mode .gpa-bar-track { background: rgba(255,255,255,0.06); }
+  body.dark-mode .event-name { color: #e8d8b0; }
+  body.dark-mode .event-date { color: #666; }
+  body.dark-mode .event-item { border-color: rgba(201,168,76,0.08); }
+  body.dark-mode .grade-ref-table td { color: #bba880; border-color: rgba(201,168,76,0.08); }
+  body.dark-mode .grade-ref-table tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  body.dark-mode .grade-ref-table tr:hover td { background: rgba(201,168,76,0.06); }
+  body.dark-mode .gpa-page-sub { color: rgba(201,168,76,0.6); }
+  body.dark-mode .card-section-title { filter: brightness(1.1); }
+  body.dark-mode .subjects-table tbody tr { border-color: rgba(201,168,76,0.08); }
+  body.dark-mode .subjects-table tbody tr:hover { background: rgba(201,168,76,0.05); }
+  body.dark-mode .subjects-table td { color: #e8d8b0; }
+  body.dark-mode .sub-input {
+    background: rgba(40,28,14,0.9);
+    border-color: rgba(201,168,76,0.2);
+    color: #e8d8b0;
+  }
+  body.dark-mode .sub-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  body.dark-mode .grade-pts-cell { color: var(--gold); }
+  body.dark-mode .weighted-cell { color: #c9a84c; }
+  body.dark-mode .add-subject-btn.secondary {
+    background: rgba(201,168,76,0.08);
+    color: var(--gold);
+    border-color: rgba(201,168,76,0.2);
+  }
+  body.dark-mode .result-card { background: rgba(25,18,10,0.9); }
+  body.dark-mode .result-label { color: #555; }
+  body.dark-mode .prediction-desc { color: #666; }
+  body.dark-mode .pred-field label { color: #666; }
+  body.dark-mode .pred-field input {
+    background: rgba(40,28,14,0.9);
+    border-color: rgba(201,168,76,0.2);
+    color: #e8d8b0;
+  }
+  body.dark-mode .prediction-result {
+    background: linear-gradient(135deg, rgba(107,15,26,0.15), rgba(201,168,76,0.08));
+    border-color: rgba(201,168,76,0.2);
+    color: var(--gold);
+  }
+  body.dark-mode .wstat-label { color: #666; }
+  body.dark-mode .wstat-val { color: var(--gold); }
+  body.dark-mode .wstat-bar-wrap { background: rgba(255,255,255,0.05); }
+  body.dark-mode .w-bar-label { color: #555; }
+  body.dark-mode .gpa-success-msg { color: #4caf50; }
+  /* Home page dark */
+  body.dark-mode .home-hero {
+    background: rgba(25,18,10,0.9);
+    border-color: rgba(201,168,76,0.15);
+  }
+  body.dark-mode .home-hero p { color: #bba880; }
+  body.dark-mode .home-card {
+    background: rgba(25,18,10,0.9);
+    border-color: rgba(201,168,76,0.12);
+  }
+  body.dark-mode .bubble {
+    background: radial-gradient(circle at 35% 35%, rgba(201,168,76,0.08), rgba(107,15,26,0.04));
+    border-color: rgba(201,168,76,0.1);
+  }
+  /* Idea board dark */
+  body.dark-mode #ideaPage {
+    background: linear-gradient(135deg, #050505 0%, #111 30%, #222 60%, #333 100%);
+  }
+  body.dark-mode .idea-container {
+    background: rgba(25,18,10,0.95);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+  }
+  body.dark-mode #ideasList li {
+    background: linear-gradient(135deg, rgba(30,50,30,0.4), rgba(25,18,10,0.9));
+    color: #e8d8b0;
+  }
+  body.dark-mode .idea-text { color: #e8d8b0; }
+  body.dark-mode .idea-by { color: #777; }
+  body.dark-mode .idea-form select,
+  body.dark-mode .idea-form input[type="text"] {
+    background: rgba(40,28,14,0.9);
+    border-color: rgba(201,168,76,0.2);
+    color: #e8d8b0;
+  }
+  /* Scrollbar dark */
+  body.dark-mode ::-webkit-scrollbar-track { background: #1a1a1a; }
+  body.dark-mode ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--home-bg1) 0%, var(--home-bg2) 100%);
+    transition: background 0.5s, color 0.4s;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--maroon) 0%, #3a0a0a 40%, var(--gold) 100%);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 84px;
+    box-shadow: 0 4px 24px rgba(107,15,26,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 18px,
+      rgba(201,168,76,0.06) 18px,
+      rgba(201,168,76,0.06) 36px
+    );
+    pointer-events: none;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    z-index: 1;
+  }
+  .ucsc-img-wrap {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--gold);
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 12px rgba(201,168,76,0.5);
+    flex-shrink: 0;
+  }
+  .ucsc-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+    filter: contrast(1.1) saturate(1.2);
+  }
+  /* Official UCSC logo circle */
+  .ucsc-fallback {
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 16px rgba(201,168,76,0.6), 0 0 4px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+    padding: 4px;
+  }
+  .ucsc-fallback img {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+  .header-title {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5), 0 0 24px rgba(201,168,76,0.35);
+    line-height: 1.1;
+  }
+  .header-subtitle {
+    font-size: 0.72rem;
+    color: rgba(240,208,128,0.75);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    background: var(--nav-bg);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    height: 50px;
+    gap: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    position: sticky; top: 0; z-index: 99;
+    transition: background 0.5s;
+  }
+  nav a {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.88rem;
+    color: var(--maroon);
+    text-decoration: none;
+    padding: 6px 20px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  body.dark-mode nav a { color: var(--gold); }
+  nav a:hover, nav a.active {
+    background: linear-gradient(90deg, var(--maroon), var(--gold));
+    color: #fff;
+  }
+  .nav-spacer { flex: 1; }
+  /* ── DARK MODE TOGGLE SWITCH ── */
+  .dark-toggle-wrap {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+    user-select: none;
+    padding: 4px 10px 4px 6px;
+    border-radius: 50px;
+    transition: background 0.3s;
+  }
+  .dark-toggle-wrap:hover { background: rgba(107,15,26,0.07); }
+  body.dark-mode .dark-toggle-wrap:hover { background: rgba(201,168,76,0.1); }
+
+  .toggle-icon {
+    font-size: 1rem;
+    line-height: 1;
+    transition: transform 0.5s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+  }
+  .toggle-icon.moon  { display: block; }
+  .toggle-icon.sun   { display: none; }
+  body.dark-mode .toggle-icon.moon { display: none; }
+  body.dark-mode .toggle-icon.sun  { display: block; }
+
+  /* The pill track */
+  .toggle-track {
+    width: 46px;
+    height: 24px;
+    border-radius: 12px;
+    background: rgba(107,15,26,0.18);
+    border: 1.5px solid rgba(107,15,26,0.25);
+    position: relative;
+    transition: background 0.4s, border-color 0.4s, box-shadow 0.4s;
+    flex-shrink: 0;
+  }
+  body.dark-mode .toggle-track {
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    border-color: transparent;
+    box-shadow: 0 0 10px rgba(201,168,76,0.4);
+  }
+  /* The sliding knob */
+  .toggle-knob {
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--maroon), #9a2030);
+    box-shadow: 0 2px 6px rgba(107,15,26,0.35);
+    transition: transform 0.4s cubic-bezier(.34,1.56,.64,1), background 0.4s;
+  }
+  body.dark-mode .toggle-knob {
+    transform: translateX(22px);
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  /* Label text */
+  .toggle-label {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--maroon);
+    letter-spacing: 1px;
+    transition: color 0.3s;
+    white-space: nowrap;
+  }
+  body.dark-mode .toggle-label { color: var(--gold); }
+
+  /* ── PAGES ── */
+  .page { display: none; min-height: calc(100vh - 134px); }
+  .page.active { display: block; }
+
+  /* ── HOME PAGE ── */
+  #homePage {
+    padding: 60px 32px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  /* Bubbles background */
+  .bubbles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.55), rgba(201,168,76,0.08));
+    border: 1.5px solid rgba(201,168,76,0.18);
+    animation: floatBubble linear infinite;
+    backdrop-filter: blur(1px);
+  }
+  @keyframes floatBubble {
+    0% { transform: translateY(0) scale(1); opacity: 0.7; }
+    50% { opacity: 0.4; }
+    100% { transform: translateY(-110vh) scale(1.08); opacity: 0; }
+  }
+  .home-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; text-align: center; }
+  .home-hero {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 52px 48px 44px;
+    backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(201,168,76,0.18);
+    margin-bottom: 36px;
+  }
+  .home-hero h2 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 2.1rem;
+    color: var(--maroon);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+  body.dark-mode .home-hero h2 { color: var(--gold); }
+  .home-hero p {
+    color: var(--text-dark);
+    font-size: 1.05rem;
+    line-height: 1.9;
+    max-width: 580px;
+    margin: 0 auto 28px;
+    opacity: 0.82;
+  }
+  .home-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .home-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 32px 18px 26px;
+    text-align: center;
+    cursor: pointer;
+    border: 1.5px solid rgba(201,168,76,0.15);
+    transition: transform 0.22s, box-shadow 0.22s;
+  }
+  .home-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(107,15,26,0.18); }
+  .home-card .card-icon { font-size: 2.4rem; margin-bottom: 12px; }
+  .home-card h3 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1rem;
+    color: var(--maroon);
+    letter-spacing: 1px;
+  }
+  body.dark-mode .home-card h3 { color: var(--gold); }
+
+  /* ── GPA PLACEHOLDER ── */
+  .placeholder-page {
+    display: flex; align-items: center; justify-content: center;
+    min-height: calc(100vh - 134px);
+    padding: 40px;
+  }
+  .placeholder-box {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 60px 56px;
+    text-align: center;
+    max-width: 480px;
+    border: 1.5px solid rgba(201,168,76,0.18);
+  }
+  .placeholder-box .ph-icon { font-size: 3.5rem; margin-bottom: 16px; }
+  .placeholder-box h2 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.6rem;
+    color: var(--maroon);
+    margin-bottom: 10px;
+  }
+  body.dark-mode .placeholder-box h2 { color: var(--gold); }
+  .placeholder-box p { color: var(--text-dark); opacity: 0.75; font-size: 0.95rem; }
+
+  /* ══════════════════════════════════════════
+     STUDY TIMER / POMODORO PAGE
+  ══════════════════════════════════════════ */
+  #timerPage {
+    background: #fff;
+    min-height: calc(100vh - 134px);
+    padding: 40px 20px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  #timerPage::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(107,15,26,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(201,168,76,0.10) 0%, transparent 70%),
+      #ffffff;
+    pointer-events: none;
+  }
+  .timer-layout {
+    position: relative; z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 720px) { .timer-layout { grid-template-columns: 1fr; } }
+
+  .glass-card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border: 1.5px solid rgba(201,168,76,0.22);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(107,15,26,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  .timer-main { padding: 36px 32px 32px; text-align: center; }
+  .timer-page-title {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 3px; margin-bottom: 6px;
+  }
+  .timer-mode-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 28px; }
+  .mode-tab {
+    padding: 6px 18px; border-radius: 20px;
+    border: 1.5px solid rgba(107,15,26,0.2);
+    background: transparent;
+    font-family: 'Noto Serif JP', serif; font-size: 0.78rem; font-weight: 700;
+    color: var(--maroon); cursor: pointer; letter-spacing: 1px; transition: all 0.2s;
+  }
+  .mode-tab.active, .mode-tab:hover {
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    color: #fff; border-color: transparent;
+  }
+  .timer-ring-wrap {
+    position: relative; width: 220px; height: 220px; margin: 0 auto 28px;
+  }
+  .timer-ring-wrap svg { transform: rotate(-90deg); position: absolute; top: 0; left: 0; }
+  .ring-bg { fill: none; stroke: rgba(201,168,76,0.15); stroke-width: 10; }
+  .ring-progress {
+    fill: none; stroke-width: 10; stroke-linecap: round;
+    stroke: url(#ringGrad); transition: stroke-dashoffset 1s linear;
+  }
+  .timer-display {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .timer-digits {
+    font-family: 'Sawarabi Mincho', serif; font-size: 3.2rem;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; letter-spacing: 2px; line-height: 1;
+  }
+  .timer-label { font-size: 0.7rem; letter-spacing: 3px; color: #999; text-transform: uppercase; margin-top: 6px; }
+  .session-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+  .sdot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(107,15,26,0.15); border: 1.5px solid rgba(107,15,26,0.2); transition: background 0.3s;
+  }
+  .sdot.done { background: linear-gradient(135deg, var(--maroon), var(--gold)); border-color: transparent; }
+  .timer-controls { display: flex; gap: 12px; justify-content: center; }
+  .tc-btn {
+    width: 52px; height: 52px; border-radius: 50%; border: none; cursor: pointer; font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .tc-btn:hover { transform: scale(1.1); }
+  .tc-btn:active { transform: scale(0.95); }
+  .btn-start {
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--gold) 100%);
+    color: #fff; box-shadow: 0 4px 16px rgba(107,15,26,0.35);
+    width: 64px; height: 64px; font-size: 1.5rem;
+  }
+  .btn-reset { background: rgba(107,15,26,0.08); color: var(--maroon); border: 1.5px solid rgba(107,15,26,0.2); }
+  .btn-skip { background: rgba(201,168,76,0.15); color: #8a6c00; border: 1.5px solid rgba(201,168,76,0.3); }
+
+  .timer-right { display: flex; flex-direction: column; gap: 22px; }
+  .graph-card { padding: 24px 24px 20px; }
+  .graph-card h3 {
+    font-family: 'Sawarabi Mincho', serif; font-size: 0.9rem; letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px;
+  }
+  .bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 90px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .bar-fill {
+    width: 100%; border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--maroon) 100%);
+    min-height: 4px; transition: height 0.5s cubic-bezier(.22,.8,.44,1);
+  }
+  .bar-label { font-size: 0.62rem; color: #999; letter-spacing: 0.5px; }
+  .graph-legend { margin-top: 10px; font-size: 0.72rem; color: #aaa; letter-spacing: 1px; text-align: right; }
+
+  .reminder-card { padding: 24px; }
+  .reminder-card h3 {
+    font-family: 'Sawarabi Mincho', serif; font-size: 0.9rem; letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 14px;
+  }
+  .reminder-row { display: flex; gap: 8px; margin-bottom: 12px; }
+  .reminder-row input[type="text"], .reminder-row input[type="number"] {
+    flex: 1; padding: 9px 14px; border-radius: 50px;
+    border: 1.5px solid rgba(201,168,76,0.3);
+    font-family: 'Noto Serif JP', serif; font-size: 0.82rem;
+    background: rgba(255,255,255,0.7); color: #333; outline: none; transition: border 0.2s;
+  }
+  .reminder-row input:focus { border-color: var(--gold); }
+  .reminder-row input[type="number"] { max-width: 72px; }
+  .add-rem-btn {
+    padding: 9px 18px; border-radius: 50px; border: none;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    color: #fff; font-size: 0.82rem; font-family: 'Noto Serif JP', serif; font-weight: 700;
+    cursor: pointer; white-space: nowrap; transition: opacity 0.2s, transform 0.15s;
+  }
+  .add-rem-btn:hover { opacity: 0.9; transform: scale(1.03); }
+  .reminders-list { list-style: none; padding: 0; max-height: 140px; overflow-y: auto; }
+  .reminders-list::-webkit-scrollbar { width: 4px; }
+  .reminders-list::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
+  .reminders-list li {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(107,15,26,0.04); border-radius: 10px; padding: 7px 12px; margin-bottom: 6px;
+    font-size: 0.8rem; color: #444; border-left: 3px solid var(--gold); transition: opacity 0.3s;
+  }
+  .reminders-list li.fired { opacity: 0.4; text-decoration: line-through; }
+  .rem-time-badge {
+    background: linear-gradient(135deg, var(--maroon), var(--gold)); color: #fff;
+    border-radius: 20px; padding: 2px 9px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  }
+  .rem-del { margin-left: auto; background: none; border: none; color: #ccc; cursor: pointer; font-size: 0.9rem; transition: color 0.2s; }
+  .rem-del:hover { color: var(--maroon); }
+
+  .toast {
+    position: fixed; top: 110px; right: 24px;
+    background: rgba(255,255,255,0.88); backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(201,168,76,0.4); border-radius: 16px;
+    padding: 16px 24px; box-shadow: 0 8px 32px rgba(107,15,26,0.18);
+    z-index: 9999; display: flex; align-items: center; gap: 12px;
+    transform: translateX(120%); transition: transform 0.4s cubic-bezier(.22,.8,.44,1); max-width: 320px;
+  }
+  .toast.show { transform: translateX(0); }
+  .toast-icon { font-size: 1.8rem; }
+  .toast-title { font-family: 'Sawarabi Mincho', serif; font-size: 0.95rem; color: var(--maroon); }
+  .toast-msg { font-size: 0.78rem; color: #666; margin-top: 2px; }
+  @keyframes pulse-ring {
+    0%,100% { filter: drop-shadow(0 0 4px rgba(201,168,76,0.4)); }
+    50% { filter: drop-shadow(0 0 14px rgba(107,15,26,0.5)); }
+  }
+  .ring-running { animation: pulse-ring 2s ease infinite; }
+
+  /* ── GROUP IDEA BOARD PAGE ── */
+  #ideaPage {
+    min-height: calc(100vh - 134px);
+    display: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a0a0a 0%, #2a2a2a 30%, #555 60%, #fff 100%);
+    background-size: 400% 400%;
+    animation: gradShift 8s ease infinite;
+    padding-bottom: 60px;
+  }
+  #ideaPage.active { display: block; }
+  @keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .idea-container {
+    position: relative; z-index: 1;
+    margin-top: 40px;
+    max-width: 660px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.92);
+    border-radius: 28px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.28);
+    padding: 0 0 40px;
+    overflow: hidden;
+  }
+  .idea-header {
+    background: linear-gradient(135deg, #1a6b1a 0%, #4caf50 50%, #c8f0c8 100%);
+    padding: 36px 40px 28px;
+    text-align: center;
+    position: relative;
+  }
+  .idea-header .idea-logo { font-size: 2.6rem; margin-bottom: 8px; }
+  .idea-header h1 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.85rem;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,80,0,0.4);
+  }
+  .idea-header p { color: rgba(255,255,255,0.82); font-size: 0.82rem; letter-spacing: 2px; margin-top: 4px; }
+  .idea-form { padding: 34px 40px 0; }
+  .idea-form label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #444;
+    display: block;
+    margin-bottom: 7px;
+  }
+  .idea-form select,
+  .idea-form input[type="text"] {
+    width: 100%;
+    padding: 13px 18px;
+    border-radius: 50px;
+    border: 2px solid #d4d4d4;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.95rem;
+    background: #f9f9f9;
+    color: #222;
+    outline: none;
+    margin-bottom: 20px;
+    transition: border 0.2s, box-shadow 0.2s;
+  }
+  .idea-form select:focus,
+  .idea-form input[type="text"]:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 0 3px rgba(76,175,80,0.15);
+    background: #fff;
+  }
+  #addIdeaBtn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #1a6b1a 0%, #4caf50 60%, #e8ffe8 100%);
+    color: #fff;
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(30,100,30,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  #addIdeaBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(30,100,30,0.35); }
+  #addIdeaBtn:active { transform: scale(0.98); }
+  .error-msg {
+    color: #c00;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: -14px;
+    margin-bottom: 12px;
+    min-height: 18px;
+    letter-spacing: 0.5px;
+  }
+  /* Ideas list */
+  .ideas-section { padding: 32px 40px 0; }
+  .ideas-section h2 {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.05rem;
+    color: #1a6b1a;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #ideasList { list-style: none; padding: 0; }
+  #ideasList li {
+    background: linear-gradient(135deg, #f0fff0, #fff);
+    border-left: 4px solid #4caf50;
+    border-radius: 12px;
+    padding: 14px 18px 14px 20px;
+    margin-bottom: 12px;
+    font-size: 0.92rem;
+    color: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    animation: ideaIn 0.35s cubic-bezier(.22,.8,.44,1) forwards;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  @keyframes ideaIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .idea-bullet { color: #4caf50; font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+  .idea-text-wrap { flex: 1; }
+  .idea-text { font-weight: 700; color: #1a1a1a; }
+  .idea-by { font-size: 0.78rem; color: #666; margin-top: 3px; letter-spacing: 0.5px; }
+  .idea-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .vote-section { display: flex; align-items: center; gap: 4px; }
+  .vote-btn {
+    background: none;
+    border: 1.5px solid #4caf50;
+    border-radius: 50%;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #1a6b1a;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+    line-height: 1;
+  }
+  .vote-btn:hover { background: #4caf50; color: #fff; transform: scale(1.12); }
+  .vote-btn.upvoted { background: #4caf50; color: #fff; }
+  .vote-count {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #1a6b1a;
+    min-width: 20px;
+    text-align: center;
+  }
+  .empty-state {
+    text-align: center;
+    color: #aaa;
+    font-size: 0.9rem;
+    padding: 30px 0 10px;
+    letter-spacing: 1px;
+  }
+
+  /* ══════════════════════════════════════════
+     GPA CALCULATOR PAGE STYLES
+  ══════════════════════════════════════════ */
+  #gpaPage {
+    background: linear-gradient(135deg, #fdf6ec 0%, #f5e6d0 40%, #ecdabc 100%);
+    min-height: calc(100vh - 134px);
+    padding: 28px 20px 60px;
+  }
+  .gpa-layout {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 860px) { .gpa-layout { grid-template-columns: 1fr; } }
+
+  /* ── Sidebar ── */
+  .gpa-sidebar { display: flex; flex-direction: column; gap: 18px; }
+  .sidebar-card {
+    background: rgba(255,255,255,0.82);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(201,168,76,0.25);
+    border-radius: 20px;
+    padding: 20px 18px;
+    box-shadow: 0 4px 20px rgba(107,15,26,0.08);
+  }
+  .sidebar-card-title {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .gpa-big-display { text-align: center; margin-bottom: 14px; }
+  .gpa-value {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 3rem;
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--gold) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    transition: all 0.5s;
+  }
+  .gpa-scale { font-size: 0.72rem; color: #999; letter-spacing: 2px; margin-top: 4px; }
+  .gpa-bar-wrap { margin-bottom: 14px; }
+  .gpa-bar-track {
+    height: 8px; border-radius: 4px;
+    background: rgba(107,15,26,0.08);
+    overflow: hidden; margin-bottom: 5px;
+  }
+  .gpa-bar-fill {
+    height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, var(--maroon), var(--gold));
+    transition: width 0.6s cubic-bezier(.22,.8,.44,1);
+  }
+  .gpa-bar-label { font-size: 0.72rem; text-align: center; color: #888; letter-spacing: 1px; }
+  .gpa-stats-row { display: flex; justify-content: space-around; }
+  .gpa-stat { text-align: center; }
+  .gpa-stat-val {
+    font-family: 'Sawarabi Mincho', serif; font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .gpa-stat-lbl { font-size: 0.65rem; color: #aaa; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+  /* Events */
+  .events-list { list-style: none; padding: 0; }
+  .event-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .event-item:last-child { border-bottom: none; }
+  .event-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .event-name { font-size: 0.82rem; font-weight: 700; color: #2a1a00; }
+  .event-date { font-size: 0.7rem; color: #999; margin-top: 2px; letter-spacing: 0.5px; }
+
+  /* Grade reference table */
+  .grade-ref-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+  .grade-ref-table th {
+    background: linear-gradient(135deg, var(--maroon), #9a2030);
+    color: var(--gold); padding: 5px 8px; text-align: center;
+    font-family: 'Sawarabi Mincho', serif; letter-spacing: 1px;
+  }
+  .grade-ref-table td { padding: 4px 8px; text-align: center; color: #444; border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .grade-ref-table tr:nth-child(even) td { background: rgba(201,168,76,0.05); }
+  .grade-ref-table tr:hover td { background: rgba(107,15,26,0.04); }
+
+  /* ── Main Content ── */
+  .gpa-main { display: flex; flex-direction: column; gap: 20px; padding-top: 0; }
+  .gpa-page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(135deg, var(--maroon) 0%, #9a1020 50%, var(--gold) 100%);
+    border-radius: 20px; padding: 24px 28px;
+    box-shadow: 0 6px 24px rgba(107,15,26,0.3);
+    position: relative; overflow: hidden;
+  }
+  .gpa-page-header::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 18px, rgba(255,255,255,0.04) 18px, rgba(255,255,255,0.04) 36px);
+    pointer-events: none;
+  }
+  .gpa-page-title {
+    font-family: 'Sawarabi Mincho', serif; font-size: 1.7rem;
+    color: var(--gold); letter-spacing: 3px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .gpa-page-sub { font-size: 0.72rem; color: rgba(240,208,128,0.7); letter-spacing: 2px; margin-top: 4px; }
+  .gpa-reset-all-btn {
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(201,168,76,0.5); color: var(--gold);
+    padding: 10px 22px; border-radius: 50px; font-size: 0.82rem;
+    font-family: 'Noto Serif JP', serif; font-weight: 700; cursor: pointer;
+    letter-spacing: 1px; transition: all 0.2s; z-index: 1;
+  }
+  .gpa-reset-all-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.03); }
+
+  /* ── Tool Cards ── */
+  .tool-card {
+    background: rgba(255,255,255,0.88);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(201,168,76,0.2);
+    border-radius: 20px;
+    padding: 24px 24px 20px;
+    box-shadow: 0 4px 20px rgba(107,15,26,0.07);
+    transition: box-shadow 0.2s;
+  }
+  .tool-card:hover { box-shadow: 0 8px 32px rgba(107,15,26,0.13); }
+  .card-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+  .card-section-title {
+    font-family: 'Sawarabi Mincho', serif; font-size: 1rem; letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .add-subject-btn {
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    color: #fff; border: none; border-radius: 50px;
+    padding: 8px 20px; font-size: 0.8rem;
+    font-family: 'Noto Serif JP', serif; font-weight: 700;
+    cursor: pointer; letter-spacing: 1px; transition: opacity 0.2s, transform 0.15s;
+  }
+  .add-subject-btn:hover { opacity: 0.9; transform: scale(1.03); }
+  .add-subject-btn.secondary { background: rgba(107,15,26,0.08); color: var(--maroon); border: 1.5px solid rgba(107,15,26,0.2); }
+  .add-subject-btn.secondary:hover { background: rgba(107,15,26,0.14); }
+
+  /* Subjects table */
+  .subjects-table-wrap { overflow-x: auto; margin-bottom: 16px; }
+  .subjects-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .subjects-table thead tr {
+    background: linear-gradient(135deg, var(--maroon), #9a2030);
+  }
+  .subjects-table th {
+    padding: 10px 12px; color: var(--gold); text-align: left;
+    font-family: 'Sawarabi Mincho', serif; font-size: 0.75rem; letter-spacing: 1.5px;
+    white-space: nowrap;
+  }
+  .subjects-table tbody tr { border-bottom: 1px solid rgba(201,168,76,0.12); transition: background 0.15s; }
+  .subjects-table tbody tr:hover { background: rgba(201,168,76,0.07); }
+  .subjects-table td { padding: 8px 10px; color: #2a1a00; }
+  .subjects-table td:first-child { color: #aaa; font-size: 0.78rem; text-align: center; }
+  .sub-input {
+    background: rgba(255,255,255,0.9); border: 1.5px solid rgba(201,168,76,0.25);
+    border-radius: 10px; padding: 7px 12px; font-size: 0.85rem;
+    font-family: 'Noto Serif JP', serif; color: #2a1a00; outline: none;
+    width: 100%; transition: border 0.2s;
+  }
+  .sub-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+  .sub-input.name-input { min-width: 160px; }
+  .sub-input.credit-input { width: 68px; text-align: center; }
+  .sub-input.grade-input { width: 76px; text-align: center; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+  .grade-pts-cell { font-weight: 700; color: var(--maroon); text-align: center; }
+  .weighted-cell { font-weight: 700; color: #7a5500; text-align: center; }
+  .del-row-btn {
+    background: rgba(200,30,30,0.08); border: 1.5px solid rgba(200,30,30,0.2);
+    color: #c01010; border-radius: 50%; width: 28px; height: 28px;
+    cursor: pointer; font-size: 0.85rem; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .del-row-btn:hover { background: #c01010; color: #fff; }
+
+  .table-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .calc-btn {
+    background: linear-gradient(135deg, var(--maroon) 0%, var(--gold) 100%);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 11px 32px; font-size: 0.92rem;
+    font-family: 'Sawarabi Mincho', serif; font-weight: 700;
+    cursor: pointer; letter-spacing: 2px;
+    box-shadow: 0 4px 16px rgba(107,15,26,0.3); transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(107,15,26,0.35); }
+  .gpa-success-msg { min-height: 24px; font-size: 0.82rem; color: #1a6b1a; letter-spacing: 1px; margin-top: 10px; font-weight: 700; }
+
+  /* Results row */
+  .results-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  @media (max-width: 700px) { .results-row { grid-template-columns: 1fr 1fr; } }
+  .result-card { text-align: center; padding: 20px 12px; }
+  .result-icon { font-size: 1.8rem; margin-bottom: 6px; }
+  .result-label { font-size: 0.7rem; color: #aaa; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px; }
+  .result-value {
+    font-family: 'Sawarabi Mincho', serif; font-size: 1.6rem;
+    background: linear-gradient(135deg, var(--maroon), var(--gold));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    transition: all 0.4s;
+  }
+
+  /* Prediction */
+  .prediction-desc { font-size: 0.82rem; color: #888; margin-bottom: 16px; line-height: 1.7; }
+  .prediction-inputs { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+  .pred-field { display: flex; flex-direction: column; gap: 5px; min-width: 130px; }
+  .pred-field label { font-size: 0.72rem; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+  .pred-field input {
+    background: rgba(255,255,255,0.9); border: 1.5px solid rgba(201,168,76,0.3);
+    border-radius: 12px; padding: 9px 14px; font-family: 'Noto Serif JP', serif;
+    font-size: 0.88rem; color: #2a1a00; outline: none; transition: border 0.2s;
+  }
+  .pred-field input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
+  .pred-btn { align-self: flex-end; }
+  .prediction-result {
+    margin-top: 16px; padding: 14px 18px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(107,15,26,0.06), rgba(201,168,76,0.12));
+    border: 1.5px solid rgba(201,168,76,0.3);
+    font-size: 0.9rem; color: var(--maroon); font-weight: 700; letter-spacing: 0.5px;
+    min-height: 20px;
+  }
+
+  /* Weekly / productivity */
+  .weekly-bars { display: flex; align-items: flex-end; gap: 10px; height: 80px; margin-bottom: 20px; }
+  .w-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .w-bar-fill {
+    width: 100%; border-radius: 6px 6px 0 0;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--maroon) 100%);
+    transition: height 0.5s cubic-bezier(.22,.8,.44,1);
+  }
+  .w-bar-label { font-size: 0.62rem; color: #aaa; }
+  .weekly-stats { display: flex; flex-direction: column; gap: 12px; }
+  .wstat { display: flex; align-items: center; gap: 10px; }
+  .wstat-icon { font-size: 1.1rem; flex-shrink: 0; }
+  .wstat-label { font-size: 0.78rem; color: #666; width: 100px; flex-shrink: 0; }
+  .wstat-bar-wrap { flex: 1; height: 8px; background: rgba(107,15,26,0.08); border-radius: 4px; overflow: hidden; }
+  .wstat-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--maroon), var(--gold)); transition: width 0.6s; }
+  .wstat-val { font-size: 0.8rem; font-weight: 700; color: var(--maroon); width: 36px; text-align: right; }
+
+
+  /* ══════════════════════════════════════════
+     UNIFIED PAGE BANNER  (matches site header)
+  ══════════════════════════════════════════ */
+  .page-banner {
+    background: linear-gradient(135deg, var(--maroon) 0%, #3a0a0a 40%, var(--gold) 100%);
+    padding: 0 36px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 24px rgba(107,15,26,0.35);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .page-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 18px,
+      rgba(201,168,76,0.06) 18px,
+      rgba(201,168,76,0.06) 36px
+    );
+    pointer-events: none;
+  }
+  .banner-left {
+    display: flex; align-items: center; gap: 18px; z-index: 1;
+  }
+  .banner-logo-circle {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 12px rgba(201,168,76,0.45);
+    flex-shrink: 0;
+    padding: 3px;
+  }
+  .banner-logo-circle img {
+    width: 100%; height: 100%; object-fit: contain; border-radius: 50%;
+  }
+  .banner-logo-circle .banner-logo-emoji {
+    font-size: 1.6rem; line-height: 1;
+  }
+  .banner-text-wrap { display: flex; flex-direction: column; gap: 2px; }
+  .banner-title {
+    font-family: 'Sawarabi Mincho', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.45), 0 0 20px rgba(201,168,76,0.3);
+    line-height: 1;
+  }
+  .banner-subtitle {
+    font-size: 0.68rem;
+    color: rgba(240,208,128,0.72);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .banner-badge {
+    z-index: 1;
+    background: rgba(255,255,255,0.12);
+    border: 1.5px solid rgba(201,168,76,0.4);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.78rem;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    backdrop-filter: blur(6px);
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Floating Bubbles (home bg) -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <div class="ucsc-fallback" id="logoWrap">
+      <img 
+        src="C:\Users\dinit\OneDrive\Desktop\University\VLE\VibeCoding\Day4\group14-idea-board\ucsc.png" 
+        alt="UCSC Logo"
+      />
+    </div>
+    <div>
+      <div class="header-title">Student Tool Kit</div>
+      <div class="header-subtitle">University of Colombo School of Computing</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAVBAR -->
+<nav>
+  <a class="nav-link active" data-target="homePage">🏠 Home</a>
+  <a class="nav-link" data-target="gpaPage">📊 GPA Calculator</a>
+  <a class="nav-link" data-target="timerPage">⏱ Study Timer</a>
+  <a class="nav-link" data-target="ideaPage">💡 Group Idea Board</a>
+  <div class="nav-spacer"></div>
+  <label class="dark-toggle-wrap" for="darkToggle" onclick="toggleDarkMode()">
+    <span class="toggle-icon moon">🌙</span>
+    <span class="toggle-icon sun">☀️</span>
+    <div class="toggle-track">
+      <div class="toggle-knob"></div>
+    </div>
+    <span class="toggle-label" id="toggleLabel">Dark</span>
+  </label>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="homePage" class="page active">
+  <div class="home-content">
+    <div class="home-hero">
+      <h2>Welcome to Student Tool Kit</h2>
+      <p>Your all-in-one academic companion. Track your GPA, manage study sessions, and collaborate with your group — all in one beautiful space.</p>
+    </div>
+    <div class="home-cards">
+      <div class="home-card" onclick="navigate('gpaPage')">
+        <div class="card-icon">📊</div>
+        <h3>GPA Calculator</h3>
+      </div>
+      <div class="home-card" onclick="navigate('timerPage')">
+        <div class="card-icon">⏱</div>
+        <h3>Study Timer</h3>
+      </div>
+      <div class="home-card" onclick="navigate('ideaPage')">
+        <div class="card-icon">💡</div>
+        <h3>Group Idea Board</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GPA CALCULATOR PAGE -->
+<div id="gpaPage" class="page">
+  <div class="gpa-layout" style="padding-top:28px;">
+    <!-- SIDEBAR -->
+    <aside class="gpa-sidebar">
+      <div class="sidebar-card gpa-summary-card">
+        <div class="sidebar-card-title">📈 GPA Summary</div>
+        <div class="gpa-big-display">
+          <div class="gpa-value" id="sideGpaValue">0.00</div>
+          <div class="gpa-scale">out of 4.00</div>
+        </div>
+        <div class="gpa-bar-wrap">
+          <div class="gpa-bar-track"><div class="gpa-bar-fill" id="sideGpaBar" style="width:0%"></div></div>
+          <div class="gpa-bar-label" id="sideGpaLabel">No data</div>
+        </div>
+        <div class="gpa-stats-row">
+          <div class="gpa-stat"><div class="gpa-stat-val" id="sideTotalCredits">0</div><div class="gpa-stat-lbl">Credits</div></div>
+          <div class="gpa-stat"><div class="gpa-stat-val" id="sideTotalSubjects">0</div><div class="gpa-stat-lbl">Subjects</div></div>
+          <div class="gpa-stat"><div class="gpa-stat-val" id="sideWeightedGpa">0.00</div><div class="gpa-stat-lbl">Weighted</div></div>
+        </div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">📅 Upcoming Events</div>
+        <ul class="events-list">
+          <li class="event-item"><div class="event-dot" style="background:#e74c3c"></div><div><div class="event-name">Data Structures Exam</div><div class="event-date">Mar 15 · 9:00 AM</div></div></li>
+          <li class="event-item"><div class="event-dot" style="background:#f39c12"></div><div><div class="event-name">OS Assignment Due</div><div class="event-date">Mar 18 · 11:59 PM</div></div></li>
+          <li class="event-item"><div class="event-dot" style="background:#2ecc71"></div><div><div class="event-name">Database Lab Practical</div><div class="event-date">Mar 20 · 2:00 PM</div></div></li>
+          <li class="event-item"><div class="event-dot" style="background:#3498db"></div><div><div class="event-name">Software Project Review</div><div class="event-date">Mar 24 · 10:00 AM</div></div></li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-card-title">📋 Grade Reference</div>
+        <table class="grade-ref-table">
+          <thead><tr><th>Grade</th><th>Points</th><th>Range</th></tr></thead>
+          <tbody>
+            <tr><td>A+</td><td>4.0</td><td>97–100</td></tr>
+            <tr><td>A</td><td>4.0</td><td>93–96</td></tr>
+            <tr><td>A-</td><td>3.7</td><td>90–92</td></tr>
+            <tr><td>B+</td><td>3.3</td><td>87–89</td></tr>
+            <tr><td>B</td><td>3.0</td><td>83–86</td></tr>
+            <tr><td>B-</td><td>2.7</td><td>80–82</td></tr>
+            <tr><td>C+</td><td>2.3</td><td>77–79</td></tr>
+            <tr><td>C</td><td>2.0</td><td>73–76</td></tr>
+            <tr><td>C-</td><td>1.7</td><td>70–72</td></tr>
+            <tr><td>D</td><td>1.0</td><td>60–69</td></tr>
+            <tr><td>F</td><td>0.0</td><td>0–59</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </aside>
+    <!-- MAIN CONTENT -->
+    <main class="gpa-main">
+      <div class="page-banner">
+        <div class="banner-left">
+          <div class="banner-logo-circle">
+            <img src="C:\Users\dinit\OneDrive\Desktop\University\VLE\VibeCoding\Day4\group14-idea-board\ucsc.png"
+              alt="UCSC"
+              onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'banner-logo-emoji\'>📊</span>'"/>
+          </div>
+          <div class="banner-text-wrap">
+            <div class="banner-title">GPA Calculator</div>
+            <div class="banner-subtitle">University of Colombo School of Computing</div>
+          </div>
+        </div>
+        <button class="banner-badge gpa-reset-all-btn" onclick="resetAll()">↺ Reset All</button>
+      </div>
+      <div class="tool-card subjects-card">
+        <div class="card-header-row">
+          <h2 class="card-section-title">📚 Subject Entry</h2>
+          <button class="add-subject-btn" onclick="addSubjectRow()">+ Add Subject</button>
+        </div>
+        <div class="subjects-table-wrap">
+          <table class="subjects-table" id="subjectsTable">
+            <thead>
+              <tr><th>#</th><th>Subject Name</th><th>Credits</th><th>Grade</th><th>Grade Points</th><th>Weighted</th><th></th></tr>
+            </thead>
+            <tbody id="subjectsTbody"></tbody>
+          </table>
+        </div>
+        <div class="table-footer">
+          <button class="add-subject-btn secondary" onclick="addSubjectRow()">+ Add Another Subject</button>
+          <button class="calc-btn" onclick="calculateGPA()">⚡ Calculate GPA</button>
+        </div>
+        <div class="gpa-success-msg" id="gpaMsg"></div>
+      </div>
+      <div class="results-row">
+        <div class="tool-card result-card"><div class="result-icon">🎯</div><div class="result-label">Semester GPA</div><div class="result-value" id="resSemGpa">—</div></div>
+        <div class="tool-card result-card"><div class="result-icon">📦</div><div class="result-label">Total Credits</div><div class="result-value" id="resTotalCredits">—</div></div>
+        <div class="tool-card result-card"><div class="result-icon">⚖️</div><div class="result-label">Weighted GPA</div><div class="result-value" id="resWeightedGpa">—</div></div>
+        <div class="tool-card result-card"><div class="result-icon">🏅</div><div class="result-label">Standing</div><div class="result-value" id="resStanding">—</div></div>
+      </div>
+      <div class="tool-card prediction-card">
+        <h2 class="card-section-title">🔮 GPA Prediction — What grade do I need?</h2>
+        <p class="prediction-desc">Enter your current GPA, credit count, and target GPA to find out what grade you need in upcoming subjects.</p>
+        <div class="prediction-inputs">
+          <div class="pred-field"><label>Current GPA</label><input type="number" id="predCurrentGpa" placeholder="e.g. 3.20" min="0" max="4" step="0.01"/></div>
+          <div class="pred-field"><label>Current Credits</label><input type="number" id="predCurrentCredits" placeholder="e.g. 60" min="0"/></div>
+          <div class="pred-field"><label>Target GPA</label><input type="number" id="predTargetGpa" placeholder="e.g. 3.50" min="0" max="4" step="0.01"/></div>
+          <div class="pred-field"><label>Upcoming Credits</label><input type="number" id="predUpcomingCredits" placeholder="e.g. 18" min="1"/></div>
+          <button class="calc-btn pred-btn" onclick="predictGPA()">🔮 Predict</button>
+        </div>
+        <div class="prediction-result" id="predResult"></div>
+      </div>
+      <div class="tool-card weekly-card">
+        <h2 class="card-section-title">📅 Productivity Summary</h2>
+        <div class="weekly-bars" id="weeklyBars"></div>
+        <div class="weekly-stats">
+          <div class="wstat"><span class="wstat-icon">🎯</span><span class="wstat-label">Focus Score</span><div class="wstat-bar-wrap"><div class="wstat-bar" style="width:72%"></div></div><span class="wstat-val">72%</span></div>
+          <div class="wstat"><span class="wstat-icon">🔄</span><span class="wstat-label">Consistency</span><div class="wstat-bar-wrap"><div class="wstat-bar" style="width:85%"></div></div><span class="wstat-val">85%</span></div>
+          <div class="wstat"><span class="wstat-icon">📈</span><span class="wstat-label">Progress</span><div class="wstat-bar-wrap"><div class="wstat-bar" style="width:60%"></div></div><span class="wstat-val">60%</span></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- STUDY TIMER / POMODORO PAGE -->
+<div id="timerPage" class="page">
+  <div class="page-banner">
+    <div class="banner-left">
+      <div class="banner-logo-circle">
+        <img src="C:\Users\dinit\OneDrive\Desktop\University\VLE\VibeCoding\Day4\group14-idea-board\ucsc.png"
+          alt="UCSC"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'banner-logo-emoji\'>⏱</span>'"/>
+      </div>
+      <div class="banner-text-wrap">
+        <div class="banner-title">Study Timer</div>
+        <div class="banner-subtitle">University of Colombo School of Computing</div>
+      </div>
+    </div>
+    <div class="banner-badge">Pomodoro · 25 min</div>
+  </div>
+  <div class="timer-layout" style="margin-top:0; padding-top:32px;">
+
+    <!-- LEFT: Timer Card -->
+    <div class="glass-card timer-main">
+      <div class="timer-mode-tabs">
+        <button class="mode-tab active" data-mode="pomodoro" onclick="setMode('pomodoro',this)">Pomodoro</button>
+        <button class="mode-tab" data-mode="short" onclick="setMode('short',this)">Short Break</button>
+        <button class="mode-tab" data-mode="long" onclick="setMode('long',this)">Long Break</button>
+      </div>
+
+      <div class="timer-ring-wrap" id="ringWrap">
+        <svg width="220" height="220" viewBox="0 0 220 220">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#6b0f1a"/>
+              <stop offset="100%" stop-color="#c9a84c"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-bg" cx="110" cy="110" r="100"/>
+          <circle class="ring-progress" id="ringProgress" cx="110" cy="110" r="100"
+            stroke-dasharray="628.3" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-display">
+          <div class="timer-digits" id="timerDisplay">25:00</div>
+          <div class="timer-label" id="timerModeLabel">Focus</div>
+        </div>
+      </div>
+
+      <div class="session-dots" id="sessionDots">
+        <div class="sdot" id="dot0"></div>
+        <div class="sdot" id="dot1"></div>
+        <div class="sdot" id="dot2"></div>
+        <div class="sdot" id="dot3"></div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="tc-btn btn-reset" title="Reset" onclick="resetTimer()">↺</button>
+        <button class="tc-btn btn-start" id="startPauseBtn" onclick="toggleTimer()">▶</button>
+        <button class="tc-btn btn-skip" title="Skip" onclick="skipSession()">⏭</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: Graph + Reminders -->
+    <div class="timer-right">
+
+      <!-- Work Graph -->
+      <div class="glass-card graph-card">
+        <h3>📊 Today's Focus Sessions</h3>
+        <div class="bar-chart" id="barChart"></div>
+        <div class="graph-legend" id="graphLegend">0 sessions completed today</div>
+      </div>
+
+      <!-- Custom Reminders -->
+      <div class="glass-card reminder-card">
+        <h3>🔔 Custom Reminders</h3>
+        <div class="reminder-row">
+          <input type="text" id="remText" placeholder="e.g. Drink water" maxlength="50"/>
+          <input type="number" id="remMin" placeholder="min" min="1" max="120" value="10"/>
+          <button class="add-rem-btn" onclick="addReminder()">+ Add</button>
+        </div>
+        <ul class="reminders-list" id="remindersList"></ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+  <div class="toast-icon" id="toastIcon">🔔</div>
+  <div>
+    <div class="toast-title" id="toastTitle">Time's up!</div>
+    <div class="toast-msg" id="toastMsg">Take a break.</div>
+  </div>
+</div>
+
+<!-- GROUP IDEA BOARD PAGE -->
+<div id="ideaPage" class="page">
+  <div class="page-banner">
+    <div class="banner-left">
+      <div class="banner-logo-circle">
+        <img src="C:\Users\dinit\OneDrive\Desktop\University\VLE\VibeCoding\Day4\group14-idea-board\ucsc.png"
+          alt="UCSC"
+          onerror="this.style.display='none';this.parentElement.innerHTML='<span class=\'banner-logo-emoji\'>💡</span>'"/>
+      </div>
+      <div class="banner-text-wrap">
+        <div class="banner-title">Group Idea Board</div>
+        <div class="banner-subtitle">University of Colombo School of Computing · Group 14</div>
+      </div>
+    </div>
+    <div class="banner-badge">Group 14</div>
+  </div>
+  <div class="idea-container">
+    <div class="idea-form">
+      <label>Your Name</label>
+      <select id="nameSelect">
+        <option value="">— Select your name —</option>
+        <option>Yethmika</option>
+        <option>Pawan</option>
+        <option>Dinith</option>
+        <option>Dilpa</option>
+        <option>Udantha</option>
+        <option>Tharusha</option>
+        <option>Chamodya</option>
+      </select>
+      <label>Your Idea</label>
+      <input type="text" id="ideaInput" placeholder="Enter your idea here…" maxlength="200"/>
+      <div class="error-msg" id="errMsg"></div>
+      <button id="addIdeaBtn">✦ Add Idea</button>
+    </div>
+    <div class="ideas-section">
+      <h2>💬 Ideas Shared</h2>
+      <ul id="ideasList">
+        <li class="empty-state" id="emptyState">No ideas yet — be the first! 🌟</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ── BUBBLES ── */
+  (function() {
+    const wrap = document.getElementById('bubbles');
+    const sizes = [28,44,60,80,36,52,20,70,90,42];
+    const lefts = [5,12,22,35,48,58,68,78,88,95];
+    sizes.forEach((s, i) => {
+      const b = document.createElement('div');
+      b.className = 'bubble';
+      b.style.cssText = `
+        width:${s}px; height:${s}px;
+        left:${lefts[i]}%;
+        bottom:-${s}px;
+        animation-duration:${10 + i * 2.2}s;
+        animation-delay:${i * 1.4}s;
+      `;
+      wrap.appendChild(b);
+    });
+  })();
+
+  /* ── NAVIGATION ── */
+  function navigate(targetId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+    document.getElementById(targetId).classList.add('active');
+    const navLink = document.querySelector(`.nav-link[data-target="${targetId}"]`);
+    if (navLink) navLink.classList.add('active');
+  }
+
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => navigate(link.dataset.target));
+  });
+
+  /* ── DARK MODE TOGGLE ── */
+  function toggleDarkMode() {
+    const isDark = document.body.classList.toggle('dark-mode');
+    document.getElementById('toggleLabel').textContent = isDark ? 'Light' : 'Dark';
+    try { localStorage.setItem('darkMode', isDark ? '1' : '0'); } catch(e) {}
+  }
+  // Restore preference on load
+  try {
+    if (localStorage.getItem('darkMode') === '1') {
+      document.body.classList.add('dark-mode');
+      const lbl = document.getElementById('toggleLabel');
+      if (lbl) lbl.textContent = 'Light';
+    }
+  } catch(e) {}
+
+  /* ── IDEA BOARD ── */
+  const ideas = [];
+
+  document.getElementById('addIdeaBtn').addEventListener('click', addIdea);
+  document.getElementById('ideaInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') addIdea();
+  });
+
+  function addIdea() {
+    const name = document.getElementById('nameSelect').value.trim();
+    const text = document.getElementById('ideaInput').value.trim();
+    const err = document.getElementById('errMsg');
+
+    if (!name) { err.textContent = '⚠ Please select your name.'; return; }
+    if (!text) { err.textContent = '⚠ Please enter an idea before adding.'; return; }
+    err.textContent = '';
+
+    ideas.push({ name, text, votes: 0, upvoted: false });
+    document.getElementById('ideaInput').value = '';
+    renderIdeas();
+  }
+
+  function renderIdeas() {
+    const list = document.getElementById('ideasList');
+    list.innerHTML = '';
+
+    if (ideas.length === 0) {
+      list.innerHTML = '<li class="empty-state" id="emptyState">No ideas yet — be the first! 🌟</li>';
+      return;
+    }
+
+    ideas.forEach((idea, idx) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span class="idea-bullet">●</span>
+        <div class="idea-text-wrap">
+          <div class="idea-text">${escHtml(idea.text)}</div>
+          <div class="idea-by">— suggested by <strong>${escHtml(idea.name)}</strong></div>
+        </div>
+        <div class="idea-actions">
+          <div class="vote-section">
+            <button class="vote-btn ${idea.upvoted ? 'upvoted' : ''}" onclick="vote(${idx})" title="Upvote">▲</button>
+            <span class="vote-count">${idea.votes}</span>
+          </div>
+        </div>
+      `;
+      list.appendChild(li);
+      // Stagger animation
+      li.style.animationDelay = `${idx * 0.06}s`;
+    });
+  }
+
+  function vote(idx) {
+    if (ideas[idx].upvoted) {
+      ideas[idx].votes--;
+      ideas[idx].upvoted = false;
+    } else {
+      ideas[idx].votes++;
+      ideas[idx].upvoted = true;
+    }
+    renderIdeas();
+  }
+
+  /* ══════════════════════════════════════════
+     POMODORO TIMER LOGIC
+  ══════════════════════════════════════════ */
+  const MODES = {
+    pomodoro: { seconds: 25 * 60, label: 'Focus' },
+    short:    { seconds: 5  * 60, label: 'Short Break' },
+    long:     { seconds: 15 * 60, label: 'Long Break' }
+  };
+  let currentMode   = 'pomodoro';
+  let totalSeconds  = MODES.pomodoro.seconds;
+  let remaining     = totalSeconds;
+  let running       = false;
+  let timerInterval = null;
+  let sessionsDone  = 0;
+  // Bar chart: track sessions per hour slot (last 8 hours)
+  let hourlyData    = new Array(8).fill(0);
+  let reminders     = [];  // {text, targetSeconds, fired, id}
+  let remIdCounter  = 0;
+  // Track elapsed seconds from start for reminders
+  let elapsedFromStart = 0;
+
+  const CIRCUMFERENCE = 2 * Math.PI * 100; // r=100
+
+  function setMode(mode, el) {
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    currentMode = mode;
+    totalSeconds = MODES[mode].seconds;
+    remaining = totalSeconds;
+    elapsedFromStart = 0;
+    running = false;
+    clearInterval(timerInterval);
+    document.getElementById('startPauseBtn').textContent = '▶';
+    document.getElementById('ringWrap').classList.remove('ring-running');
+    updateDisplay();
+  }
+
+  function toggleTimer() {
+    if (running) {
+      // Pause
+      running = false;
+      clearInterval(timerInterval);
+      document.getElementById('startPauseBtn').textContent = '▶';
+      document.getElementById('ringWrap').classList.remove('ring-running');
+    } else {
+      // Start/Resume
+      running = true;
+      document.getElementById('startPauseBtn').textContent = '⏸';
+      document.getElementById('ringWrap').classList.add('ring-running');
+      timerInterval = setInterval(tick, 1000);
+    }
+  }
+
+  function tick() {
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      running = false;
+      document.getElementById('startPauseBtn').textContent = '▶';
+      document.getElementById('ringWrap').classList.remove('ring-running');
+      onTimerComplete();
+      return;
+    }
+    remaining--;
+    elapsedFromStart++;
+    checkReminders();
+    updateDisplay();
+  }
+
+  function onTimerComplete() {
+    playBell();
+    if (currentMode === 'pomodoro') {
+      sessionsDone++;
+      markSessionDot();
+      logHourlySession();
+      renderBarChart();
+      showToast('🎉', 'Session Complete!', 'Great work! Time for a break.');
+    } else {
+      showToast('⏱', 'Break Over!', 'Ready to focus again?');
+    }
+  }
+
+  function resetTimer() {
+    running = false;
+    clearInterval(timerInterval);
+    remaining = totalSeconds;
+    elapsedFromStart = 0;
+    document.getElementById('startPauseBtn').textContent = '▶';
+    document.getElementById('ringWrap').classList.remove('ring-running');
+    updateDisplay();
+  }
+
+  function skipSession() {
+    clearInterval(timerInterval);
+    running = false;
+    remaining = 0;
+    document.getElementById('startPauseBtn').textContent = '▶';
+    document.getElementById('ringWrap').classList.remove('ring-running');
+    onTimerComplete();
+  }
+
+  function updateDisplay() {
+    const m = String(Math.floor(remaining / 60)).padStart(2, '0');
+    const s = String(remaining % 60).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+    document.getElementById('timerModeLabel').textContent = MODES[currentMode].label;
+    // Ring progress
+    const pct = remaining / totalSeconds;
+    const offset = CIRCUMFERENCE * (1 - pct);
+    document.getElementById('ringProgress').style.strokeDashoffset = offset;
+  }
+
+  function markSessionDot() {
+    const idx = (sessionsDone - 1) % 4;
+    document.getElementById(`dot${idx}`).classList.add('done');
+    if (sessionsDone % 4 === 0) {
+      // Full cycle - reset dots visually after short delay
+      setTimeout(() => {
+        document.querySelectorAll('.sdot').forEach(d => d.classList.remove('done'));
+      }, 1200);
+    }
+  }
+
+  /* ── BAR CHART ── */
+  function logHourlySession() {
+    const hour = new Date().getHours();
+    // Map to last-8-hours array
+    const slot = hour % 8;
+    hourlyData[slot]++;
+  }
+
+  function renderBarChart() {
+    const chart = document.getElementById('barChart');
+    chart.innerHTML = '';
+    const maxVal = Math.max(...hourlyData, 1);
+    const now = new Date().getHours();
+    const labels = [];
+    for (let i = 7; i >= 0; i--) {
+      const h = (now - i + 24) % 24;
+      labels.push(h === now ? 'Now' : `${h}:00`);
+    }
+    // Reorder hourlyData to match labels (oldest → newest)
+    const ordered = [];
+    for (let i = 7; i >= 0; i--) {
+      ordered.push(hourlyData[((now - i) % 24 + 24) % 8]);
+    }
+    ordered.forEach((val, idx) => {
+      const col = document.createElement('div');
+      col.className = 'bar-col';
+      const heightPx = Math.round((val / maxVal) * 80);
+      col.innerHTML = `
+        <div class="bar-fill" style="height:${heightPx || 4}px"></div>
+        <div class="bar-label">${labels[idx]}</div>
+      `;
+      chart.appendChild(col);
+    });
+    const total = hourlyData.reduce((a, b) => a + b, 0);
+    document.getElementById('graphLegend').textContent =
+      `${total} session${total !== 1 ? 's' : ''} completed today`;
+  }
+
+  /* ── REMINDERS ── */
+  function addReminder() {
+    const text = document.getElementById('remText').value.trim();
+    const min  = parseInt(document.getElementById('remMin').value, 10);
+    if (!text || isNaN(min) || min < 1) {
+      showToast('⚠️', 'Invalid Reminder', 'Please enter a message and minutes.');
+      return;
+    }
+    const id = remIdCounter++;
+    reminders.push({ text, targetElapsed: elapsedFromStart + min * 60, fired: false, id });
+    document.getElementById('remText').value = '';
+    document.getElementById('remMin').value = '10';
+    renderReminders();
+  }
+
+  function renderReminders() {
+    const ul = document.getElementById('remindersList');
+    ul.innerHTML = '';
+    if (reminders.length === 0) {
+      ul.innerHTML = '<li style="justify-content:center;color:#bbb;border-left:none;background:none;">No reminders set</li>';
+      return;
+    }
+    reminders.forEach(r => {
+      const li = document.createElement('li');
+      if (r.fired) li.classList.add('fired');
+      const secsLeft = Math.max(0, r.targetElapsed - elapsedFromStart);
+      const mLeft = Math.floor(secsLeft / 60);
+      const sLeft = secsLeft % 60;
+      li.innerHTML = `
+        <span class="rem-time-badge">${mLeft}m ${sLeft < 10 ? '0' : ''}${sLeft}s</span>
+        <span>${escHtml(r.text)}</span>
+        <button class="rem-del" onclick="deleteReminder(${r.id})" title="Delete">✕</button>
+      `;
+      ul.appendChild(li);
+    });
+  }
+
+  function deleteReminder(id) {
+    reminders = reminders.filter(r => r.id !== id);
+    renderReminders();
+  }
+
+  function checkReminders() {
+    reminders.forEach(r => {
+      if (!r.fired && elapsedFromStart >= r.targetElapsed) {
+        r.fired = true;
+        playBell();
+        showToast('🔔', 'Reminder!', r.text);
+        renderReminders();
+      }
+    });
+    // Refresh countdown labels every tick
+    if (reminders.some(r => !r.fired)) renderReminders();
+  }
+
+  /* ── BELL SOUND ── */
+  function playBell() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const freqs = [880, 1100, 660];
+      freqs.forEach((f, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(f, ctx.currentTime + i * 0.18);
+        gain.gain.setValueAtTime(0.35, ctx.currentTime + i * 0.18);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.18 + 0.6);
+        osc.start(ctx.currentTime + i * 0.18);
+        osc.stop(ctx.currentTime + i * 0.18 + 0.65);
+      });
+    } catch(e) {}
+  }
+
+  /* ── TOAST ── */
+  function showToast(icon, title, msg) {
+    document.getElementById('toastIcon').textContent  = icon;
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMsg').textContent   = msg;
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  /* Init */
+  updateDisplay();
+  renderBarChart();
+  renderReminders();
+
+
+  /* ══════════════════════════════════════════
+     GPA CALCULATOR LOGIC
+  ══════════════════════════════════════════ */
+  const GRADE_MAP = {
+    'A+': 4.0, 'A': 4.0, 'A-': 3.7,
+    'B+': 3.3, 'B': 3.0, 'B-': 2.7,
+    'C+': 2.3, 'C': 2.0, 'C-': 1.7,
+    'D': 1.0, 'F': 0.0
+  };
+  let subjectCount = 0;
+
+  // Init: add 3 default rows and weekly bars
+  (function initGPA() {
+    addSubjectRow(); addSubjectRow(); addSubjectRow();
+    renderWeeklyBars();
+    loadFromStorage();
+  })();
+
+  function addSubjectRow() {
+    subjectCount++;
+    const tbody = document.getElementById('subjectsTbody');
+    const tr = document.createElement('tr');
+    tr.id = 'subRow_' + subjectCount;
+    tr.innerHTML = `
+      <td>${subjectCount}</td>
+      <td><input class="sub-input name-input" type="text" placeholder="e.g. Data Structures" /></td>
+      <td><input class="sub-input credit-input" type="number" placeholder="3" min="1" max="10" value="3" /></td>
+      <td><input class="sub-input grade-input" type="text" placeholder="A" maxlength="2"
+            oninput="this.value=this.value.toUpperCase(); liveGradePoints(this, ${subjectCount})"
+            onblur="liveGradePoints(this, ${subjectCount})" /></td>
+      <td class="grade-pts-cell" id="gpts_${subjectCount}">—</td>
+      <td class="weighted-cell" id="wpts_${subjectCount}">—</td>
+      <td><button class="del-row-btn" onclick="deleteRow(${subjectCount})" title="Remove">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function liveGradePoints(input, id) {
+    const grade = input.value.trim().toUpperCase();
+    const pts = GRADE_MAP[grade];
+    const gCell = document.getElementById('gpts_' + id);
+    const wCell = document.getElementById('wpts_' + id);
+    if (pts !== undefined) {
+      gCell.textContent = pts.toFixed(1);
+      const row = document.getElementById('subRow_' + id);
+      const credits = parseFloat(row.querySelectorAll('.credit-input')[0].value) || 0;
+      wCell.textContent = (pts * credits).toFixed(2);
+    } else {
+      gCell.textContent = '—';
+      wCell.textContent = '—';
+    }
+  }
+
+  function deleteRow(id) {
+    const row = document.getElementById('subRow_' + id);
+    if (row) row.remove();
+  }
+
+  function calculateGPA() {
+    const rows = document.querySelectorAll('#subjectsTbody tr');
+    let totalCredits = 0, totalWeighted = 0, validSubjects = 0, errors = [];
+
+    rows.forEach((tr, i) => {
+      const name    = tr.querySelector('.name-input').value.trim() || `Subject ${i+1}`;
+      const credits = parseFloat(tr.querySelector('.credit-input').value);
+      const grade   = tr.querySelector('.grade-input').value.trim().toUpperCase();
+      const pts     = GRADE_MAP[grade];
+
+      if (!credits || credits < 0) { errors.push(`Row ${i+1}: invalid credits`); return; }
+      if (pts === undefined) { errors.push(`Row ${i+1} (${name}): unrecognized grade "${grade}"`); return; }
+
+      totalCredits += credits;
+      totalWeighted += pts * credits;
+      validSubjects++;
+    });
+
+    if (errors.length) {
+      document.getElementById('gpaMsg').style.color = '#c00';
+      document.getElementById('gpaMsg').textContent = '⚠ ' + errors[0];
+      return;
+    }
+    if (validSubjects === 0) {
+      document.getElementById('gpaMsg').style.color = '#c00';
+      document.getElementById('gpaMsg').textContent = '⚠ Add at least one subject.';
+      return;
+    }
+
+    const semGpa = totalWeighted / totalCredits;
+    const weightedGpa = semGpa; // same for single semester
+
+    // Update result cards
+    document.getElementById('resSemGpa').textContent = semGpa.toFixed(2);
+    document.getElementById('resTotalCredits').textContent = totalCredits;
+    document.getElementById('resWeightedGpa').textContent = weightedGpa.toFixed(2);
+    document.getElementById('resStanding').textContent = getStanding(semGpa);
+
+    // Update sidebar
+    document.getElementById('sideGpaValue').textContent = semGpa.toFixed(2);
+    document.getElementById('sideTotalCredits').textContent = totalCredits;
+    document.getElementById('sideTotalSubjects').textContent = validSubjects;
+    document.getElementById('sideWeightedGpa').textContent = weightedGpa.toFixed(2);
+    const pct = (semGpa / 4.0) * 100;
+    document.getElementById('sideGpaBar').style.width = pct + '%';
+    document.getElementById('sideGpaLabel').textContent = getStanding(semGpa);
+
+    document.getElementById('gpaMsg').style.color = '#1a6b1a';
+    document.getElementById('gpaMsg').textContent = '✅ GPA calculated successfully!';
+
+    // Save to localStorage
+    try {
+      localStorage.setItem('gpa_semGpa', semGpa.toFixed(2));
+      localStorage.setItem('gpa_credits', totalCredits);
+      localStorage.setItem('gpa_subjects', validSubjects);
+    } catch(e) {}
+  }
+
+  function getStanding(gpa) {
+    if (gpa >= 3.7) return '🏆 Distinction';
+    if (gpa >= 3.3) return '⭐ First Class';
+    if (gpa >= 3.0) return '✅ Second Upper';
+    if (gpa >= 2.7) return '📘 Second Lower';
+    if (gpa >= 2.0) return '📗 Pass';
+    return '❌ Fail';
+  }
+
+  function resetAll() {
+    document.getElementById('subjectsTbody').innerHTML = '';
+    subjectCount = 0;
+    ['resSemGpa','resTotalCredits','resWeightedGpa','resStanding'].forEach(id => document.getElementById(id).textContent = '—');
+    ['sideGpaValue','sideTotalCredits','sideTotalSubjects','sideWeightedGpa'].forEach(id => {
+      document.getElementById(id).textContent = id.includes('Value') || id.includes('Gpa') ? '0.00' : '0';
+    });
+    document.getElementById('sideGpaBar').style.width = '0%';
+    document.getElementById('sideGpaLabel').textContent = 'No data';
+    document.getElementById('gpaMsg').textContent = '';
+    addSubjectRow(); addSubjectRow(); addSubjectRow();
+    try { localStorage.removeItem('gpa_semGpa'); } catch(e) {}
+  }
+
+  function predictGPA() {
+    const cGpa     = parseFloat(document.getElementById('predCurrentGpa').value);
+    const cCredits = parseFloat(document.getElementById('predCurrentCredits').value);
+    const tGpa     = parseFloat(document.getElementById('predTargetGpa').value);
+    const uCredits = parseFloat(document.getElementById('predUpcomingCredits').value);
+    const el       = document.getElementById('predResult');
+
+    if ([cGpa,cCredits,tGpa,uCredits].some(v => isNaN(v))) {
+      el.innerHTML = '⚠️ Please fill in all fields.';
+      return;
+    }
+    if (tGpa > 4.0) { el.innerHTML = '⚠️ Target GPA cannot exceed 4.00.'; return; }
+
+    const neededWeighted = tGpa * (cCredits + uCredits) - cGpa * cCredits;
+    const neededGpa      = neededWeighted / uCredits;
+
+    if (neededGpa > 4.0) {
+      el.innerHTML = `😔 It is <strong>not mathematically possible</strong> to reach a GPA of ${tGpa.toFixed(2)} with ${uCredits} upcoming credits. You would need ${neededGpa.toFixed(2)} GPA points — above the maximum 4.00.`;
+    } else if (neededGpa < 0) {
+      el.innerHTML = `🎉 Great news! You have already surpassed your target GPA of ${tGpa.toFixed(2)}. Keep it up!`;
+    } else {
+      const grade = gpaPtsToGrade(neededGpa);
+      el.innerHTML = `✅ You need to earn at least <strong>${neededGpa.toFixed(2)} GPA points</strong> (≈ <strong>${grade}</strong>) across your upcoming ${uCredits} credits to reach a GPA of <strong>${tGpa.toFixed(2)}</strong>.`;
+    }
+  }
+
+  function gpaPtsToGrade(pts) {
+    if (pts >= 3.85) return 'A / A+';
+    if (pts >= 3.55) return 'A-';
+    if (pts >= 3.15) return 'B+';
+    if (pts >= 2.85) return 'B';
+    if (pts >= 2.55) return 'B-';
+    if (pts >= 2.15) return 'C+';
+    if (pts >= 1.85) return 'C';
+    if (pts >= 1.55) return 'C-';
+    if (pts >= 0.5)  return 'D';
+    return 'F';
+  }
+
+  function renderWeeklyBars() {
+    const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const data = [60,80,45,90,70,55,85];
+    const wrap = document.getElementById('weeklyBars');
+    wrap.innerHTML = '';
+    const max = Math.max(...data);
+    days.forEach((d, i) => {
+      const col = document.createElement('div');
+      col.className = 'w-bar-col';
+      const h = Math.round((data[i] / max) * 70);
+      col.innerHTML = `<div class="w-bar-fill" style="height:${h}px"></div><div class="w-bar-label">${d}</div>`;
+      wrap.appendChild(col);
+    });
+  }
+
+  function loadFromStorage() {
+    try {
+      const g = localStorage.getItem('gpa_semGpa');
+      const c = localStorage.getItem('gpa_credits');
+      const s = localStorage.getItem('gpa_subjects');
+      if (g) {
+        document.getElementById('sideGpaValue').textContent = g;
+        document.getElementById('sideGpaBar').style.width = ((parseFloat(g)/4)*100)+'%';
+        document.getElementById('sideGpaLabel').textContent = getStanding(parseFloat(g));
+      }
+      if (c) document.getElementById('sideTotalCredits').textContent = c;
+      if (s) document.getElementById('sideTotalSubjects').textContent = s;
+    } catch(e) {}
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+</script>
+</body>
+</html>
