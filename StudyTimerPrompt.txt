@@ -1,0 +1,8 @@
+Create a pomodoro timer for a student toolkit website using java script. 
+-It's a 25 minute timer
+-Must have start, pause/resume , reset buttons.
+-When the timer reaches zero, a bell sound or notification should appear.
+-Background is white and color theme is Maroon and gold gradient.
+-need a graph to display how you worked.
+-a feature to set custom time reminders (example: drink water in 10 minutes).
+-add glassmorphism effects where suitable.

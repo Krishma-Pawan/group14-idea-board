@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Timer</title>
+  <link rel="stylesheet" href="pomodoro.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orb orb1"></div>
+  <div class="bg-orb orb2"></div>
+  <div class="bg-orb orb3"></div>
+  <div class="bg-orb orb4"></div>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">📚</span>
+        <span class="logo-text">Study <span class="gold">Timer</span></span>
+      </div>
+      <p class="header-sub">Focus · Learn · Achieve</p>
+    </header>
+
+    <!-- Timer Card -->
+    <main class="main-content">
+      <section class="timer-card">
+
+        <!-- Mode Tabs -->
+        <div class="mode-tabs">
+          <button class="mode-tab active" data-mode="pomodoro" id="tab-pomodoro">🍅 Pomodoro</button>
+          <button class="mode-tab" data-mode="short" id="tab-short">☕ Short Break</button>
+          <button class="mode-tab" data-mode="long" id="tab-long">🌙 Long Break</button>
+        </div>
+
+        <!-- Session Label -->
+        <div class="session-label" id="session-label">Focus Session</div>
+
+        <!-- SVG Ring Timer -->
+        <div class="ring-container">
+          <svg class="ring-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+            <circle class="ring-bg" cx="110" cy="110" r="95" />
+            <circle class="ring-progress" id="ring-progress" cx="110" cy="110" r="95" stroke-dasharray="596.9"
+              stroke-dashoffset="0" />
+          </svg>
+          <div class="ring-inner">
+            <div class="timer-display" id="timer-display">25:00</div>
+            <div class="timer-status" id="timer-status">Ready to focus</div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button class="ctrl-btn reset-btn" id="btn-reset" title="Reset">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="1 4 1 10 7 10" />
+              <path d="M3.51 15a9 9 0 1 0 .49-3.89" />
+            </svg>
+          </button>
+          <button class="ctrl-btn play-btn" id="btn-play">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5,3 19,12 5,21" />
+            </svg>
+            <svg class="icon-pause hidden" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" />
+              <rect x="14" y="4" width="4" height="16" />
+            </svg>
+          </button>
+          <button class="ctrl-btn skip-btn" id="btn-skip" title="Skip">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5,4 15,12 5,20" />
+              <rect x="15" y="4" width="2" height="16" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Session Counter -->
+        <div class="sessions-row">
+          <span class="sessions-label">Sessions today:</span>
+          <div class="session-dots" id="session-dots"></div>
+          <span class="sessions-count" id="sessions-count">0</span>
+        </div>
+
+      </section>
+
+      <!-- Stats & Graph -->
+      <section class="stats-card">
+        <h2 class="stats-title">📊 Today's Work Report</h2>
+
+        <div class="stats-summary">
+          <div class="stat-box">
+            <div class="stat-value" id="stat-sessions">0</div>
+            <div class="stat-label">Sessions</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="stat-minutes">0</div>
+            <div class="stat-label">Minutes</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value" id="stat-streak">0</div>
+            <div class="stat-label">Best Streak</div>
+          </div>
+        </div>
+
+        <!-- Bar Graph -->
+        <div class="graph-section">
+          <div class="graph-header">
+            <span class="graph-title">Hourly Activity</span>
+            <button class="clear-btn" id="btn-clear">Clear</button>
+          </div>
+          <div class="graph-container">
+            <div class="graph-y-axis">
+              <span>4</span><span>3</span><span>2</span><span>1</span><span>0</span>
+            </div>
+            <div class="graph-bars" id="graph-bars"></div>
+          </div>
+          <div class="graph-x-label">Hour of Day (Last 8 Hours)</div>
+        </div>
+
+        <!-- Heatmap strip -->
+        <div class="heatmap-section">
+          <div class="heatmap-title">Session Timeline</div>
+          <div class="heatmap" id="heatmap"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Custom Reminders -->
+    <section class="reminders-card" id="reminders-section">
+      <div class="reminders-header">
+        <h2 class="reminders-title">⏰ Custom Reminders</h2>
+        <span class="reminders-sub">Set a personal nudge at any time</span>
+      </div>
+
+      <!-- Add Reminder Form -->
+      <div class="reminder-form">
+        <input type="text" class="reminder-input" id="reminder-text"
+          placeholder="e.g. Drink water, stretch, check notes…" maxlength="60" />
+        <div class="reminder-time-wrap">
+          <input type="number" class="reminder-mins" id="reminder-mins" min="1" max="120" placeholder="10" />
+          <span class="reminder-mins-label">min</span>
+        </div>
+        <button class="reminder-add-btn" id="btn-add-reminder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Add
+        </button>
+      </div>
+
+      <!-- Active Reminder List -->
+      <ul class="reminder-list" id="reminder-list">
+        <li class="reminder-empty" id="reminder-empty">No reminders set yet. Add one above! 👆</li>
+      </ul>
+    </section>
+
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+      <span class="toast-icon" id="toast-icon">🔔</span>
+      <span class="toast-msg" id="toast-msg">Time's up!</span>
+    </div>
+
+    <footer class="footer">
+      <p>Designed for Students · Stay focused, stay consistent 🎯</p>
+    </footer>
+  </div>
+
+  <script src="pomodoro.js"></script>
+</body>
+
+</html>
