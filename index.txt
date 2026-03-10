@@ -1,4 +1,4 @@
-Create a simple interactive "Group Idea Board" webpage  application using HTML, CSS, and JavaScript.
+
 
 homepage: 1.add header named by student tool kit. (colors-gradien maroon,gold \ text style-sadoshi )
           2.add a piture of ucsc coner of header (C:\Users\MSI\Desktop\group works\day 3\vibecoding_group14\ucsc.png)-remove white color background
@@ -76,7 +76,7 @@ select grade should be text box
 when grade type it should always capital
 
 
-
+Create a simple interactive "Group Idea Board" webpage  application using HTML, CSS, and JavaScript.
 
 Requirements:after click  "Group Idea Board" item in navigation bar move a new web page 
 1. A centered card-style container with the title "Group Idea Board".
