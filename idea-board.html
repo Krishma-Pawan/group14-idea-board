@@ -66,8 +66,8 @@ footer{text-align:center;padding:15px;font-size:13px;color:#666;border-top:1px s
 <input type="text" id="ideaInput" placeholder="Enter your idea">
 </div>
 <div class="buttons">
-<button id="addBtn">Add Idea</button>
-<button id="clearBtn">Clear</button>
+    <button id="addBtn">Add Idea</button>
+    <button id="resetBtn">Reset Ideas</button>
 </div>
 <div class="ideas-section">
 <div class="ideas-header">
@@ -86,14 +86,14 @@ footer{text-align:center;padding:15px;font-size:13px;color:#666;border-top:1px s
 const nameSelect=document.getElementById("nameSelect")
 const ideaInput=document.getElementById("ideaInput")
 const addBtn=document.getElementById("addBtn")
-const clearBtn=document.getElementById("clearBtn")
+const resetBtn=document.getElementById("resetBtn")
 const ideasList=document.getElementById("ideasList")
 const ideaCount=document.getElementById("ideaCount")
 let count=0
 
 addBtn.addEventListener("click",addIdea)
 ideaInput.addEventListener("keypress",e=>{if(e.key==="Enter"){addIdea()}})
-clearBtn.addEventListener("click",()=>{ideaInput.value="";ideaInput.focus()})
+resetBtn.addEventListener("click",resetIdeas)
 
 function addIdea(){
 const name=nameSelect.value
@@ -122,6 +122,14 @@ ideaCount.textContent=count
 const voteBtn=li.querySelector(".vote-btn")
 const voteCount=li.querySelector(".vote-count")
 voteBtn.addEventListener("click",()=>{voteCount.textContent=parseInt(voteCount.textContent)+1})
+}
+
+function resetIdeas(){
+    ideasList.innerHTML = '<li class="empty">No ideas yet. Add one to get started!</li>';
+    count = 0;
+    ideaCount.textContent = count;
+    ideaInput.value = '';
+    ideaInput.focus();
 }
 </script>
 </body>
